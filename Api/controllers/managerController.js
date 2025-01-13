@@ -180,9 +180,31 @@ export const dePromoteManager = async (req, res) => {
       });
     }
 
+    const findManager = await teamMemberCollection.findOne({
+      managerId: new mongoose.Types.ObjectId(userId),
+    });
+
+    if (!findManager) {
+      return res.status(400).json({
+        message: messages.notFound,
+      });
+    }
+
+    const id = findManager._id;
+
+    const deleteManager = await teamMemberCollection.deleteOne({
+      _id: new mongoose.Types.ObjectId(id),
+    });
+
+    if (!deleteManager) {
+      return res.status(400).json({
+        message: messages.notDeleted,
+      });
+    }
+
     return res.status(200).json({
       message: messages.updated,
-      employeeDetails: employee,
+      employeeDetails: deleteManager,
     });
   } catch (error) {
     return res.status(500).json({
