@@ -1,0 +1,23 @@
+<nav class="navbar">
+  <div class="title">
+    <h1 routerLink="/manager">Manager Dashboard</h1>
+  </div>
+  <div class="links">
+    <button routerLink="/manager/task" class="btn" mat-button color="basic">
+      Create Task
+    </button>
+    <button
+      routerLink="/manager/team-members"
+      class="btn"
+      mat-button
+      color="basic"
+    >
+      MyTeamMembers
+    </button>
+
+    <button routerLink="/manager/my-task" class="btn" mat-button color="basic">
+      My Task
+    </button>
+    <button (click)="logout()" mat-raised-button color="warn">Logout</button>
+  </div>
+</nav>
