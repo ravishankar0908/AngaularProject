@@ -3,7 +3,13 @@
 <div class="background">
   <div class="container">
     <form class="form" [formGroup]="taskFormValues">
-      <h1>Create Task</h1>
+      <h1>{{ isUpdate ? "Update task" : "Create Task" }}</h1>
+
+      <mat-form-field appearance="fill" *ngIf="false">
+        <mat-label>Task id</mat-label>
+        <input formControlName="taskId" matInput placeholder="Ex. Ta34" />
+      </mat-form-field>
+
       <mat-form-field appearance="fill">
         <mat-label>Enter Task Name</mat-label>
         <input formControlName="name" matInput placeholder="Ex. Ta34" />
@@ -14,7 +20,7 @@
         >
       </mat-form-field>
 
-      <mat-form-field>
+      <mat-form-field *ngIf="!isUpdate">
         <mat-label>Select Employee</mat-label>
         <mat-select formControlName="employeeId">
           <mat-option *ngIf="teamList.length <= 1; else available"
@@ -48,7 +54,7 @@
 
       <mat-form-field>
         <mat-label>Task Description</mat-label>
-        <textarea formControlName="description" matInput></textarea>
+        <textarea formControlName="description" rows="5" matInput></textarea>
 
         <mat-error *ngIf="taskFormValues.hasError('required', 'description')"
           >Task Description is <strong>required</strong></mat-error
@@ -61,7 +67,7 @@
         mat-raised-button
         color="primary"
       >
-        Assign Task
+        {{ isUpdate ? "Update Task" : "Assign Task" }}
       </button>
     </form>
   </div>

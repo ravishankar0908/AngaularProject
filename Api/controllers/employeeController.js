@@ -31,7 +31,10 @@ export const getEmployee = async (req, res) => {
 export const getTask = async (req, res) => {
   try {
     const { employeeId } = req.query;
-    const task = await taskCollection.find({ employeeId: { $in: employeeId } });
+    const task = await taskCollection.find({
+      employeeId: { $in: employeeId },
+      isDelete: false,
+    });
 
     if (task.length === 0) {
       return res.status(400).json({

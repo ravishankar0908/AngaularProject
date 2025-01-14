@@ -41,11 +41,12 @@ export class AssignTeamComponent implements OnInit {
 
       this.assignTeamService.assignTeamMember(this.assignTeam.value).subscribe({
         next: (res) => {
-          console.log(res);
-          this.toaster.success('team created', 'success');
+          this.toaster.success(res.message, 'success');
         },
         error: (error) => {
-          console.error(error.message);
+          if (error.status === 409) {
+            this.toaster.error(error.error.message, 'failed');
+          }
           this.toaster.error('team not created', 'error');
         },
       });

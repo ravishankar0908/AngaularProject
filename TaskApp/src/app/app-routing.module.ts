@@ -19,6 +19,7 @@ import { ViewMyTaskComponent } from './managerComponents/view-my-task/view-my-ta
 import { UnathourizedComponent } from './unathourized/unathourized.component';
 import { DeletedListsComponent } from './adminComponents/deleted-lists/deleted-lists.component';
 import { AssignTeamComponent } from './adminComponents/assign-team/assign-team.component';
+import { TaskResolver } from './managerComponents/services/task.resolver';
 
 const routes: Routes = [
   {
@@ -41,6 +42,7 @@ const routes: Routes = [
     path: 'manager/task',
     component: CreateTaskComponent,
     canActivate: [managerGuard],
+    resolve: { task: TaskResolver },
   },
   {
     path: 'manager/team-members',

@@ -14,7 +14,7 @@ export class AssignTeamService {
     const employeeeId = value.employee;
     const managerId = value.manager;
     return this.http.put(
-      `${this.teamApi}/employeeId=${employeeeId}&managerId=${managerId}`,
+      `${this.teamApi}?employeeId=${employeeeId}&managerId=${managerId}`,
       null
     );
   }

@@ -14,10 +14,10 @@ export class MyTasksComponent implements OnInit {
     'position',
     'name',
     'description',
+    'createat',
     'duedate',
     'status',
     'action',
-    'createat',
   ];
 
   ngOnInit(): void {
@@ -48,5 +48,19 @@ export class MyTasksComponent implements OnInit {
         console.error(error.message);
       },
     });
+  }
+
+  isPastDue(dueDate: Date): boolean {
+    const currentDate = new Date();
+    return new Date(dueDate) < currentDate;
+  }
+
+  getStatusClass(status: string): string {
+    if (status === 'pending') {
+      return 'pending';
+    } else if (status === 'completed') {
+      return 'completed';
+    }
+    return ''; // Default case if status is not recognized
   }
 }

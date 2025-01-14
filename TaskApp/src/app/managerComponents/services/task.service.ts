@@ -22,4 +22,19 @@ export class TaskService {
     const url = `${this.getTaskApi}?managerId=${managerId}`;
     return this.http.get<any>(url);
   }
+
+  // get task by Id
+  getTaskById(id: any): Observable<any> {
+    const url = `${this.postTaskApi}/byid?taskId=${id}`;
+    return this.http.get<any>(url);
+  }
+
+  deleteTask(id: any): Observable<any> {
+    const url = `${this.postTaskApi}/delete?taskId=${id}`;
+    return this.http.delete(url);
+  }
+
+  updateTask(updatedData: any): Observable<any> {
+    return this.http.put(`${this.postTaskApi}/update`, updatedData);
+  }
 }

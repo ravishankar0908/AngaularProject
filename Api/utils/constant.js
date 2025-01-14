@@ -17,4 +17,7 @@ export const messages = {
 
   reset: "User is reseted, added again",
   notReset: "Cannot reset user, error occurred",
+
+  restore: "restored successfully.",
+  notRestore: "restore failed!",
 };

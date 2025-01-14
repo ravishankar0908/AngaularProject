@@ -32,21 +32,14 @@ export const pushEmployee = async (req, res) => {
   try {
     const { managerId, employeeId } = req.query;
 
-    // checking the given employee id is valid or not
-    const checkEmployee = await userCollection.findOne({
-      _id: new mongoose.Types.ObjectId(employeeId),
+    // checking the given employee id is already in a other team
+    const check = await teamMemberCollection.findOne({
+      employeeId: new mongoose.Types.ObjectId(employeeId),
     });
 
-    if (!checkEmployee) {
-      return res.status(404).json({
-        message: "Employee not found",
-      });
-    }
-
-    if (checkEmployee.role !== "employee") {
-      return res.status(404).json({
-        message: "The given employee id is not an employee",
-        givenIdRole: checkEmployee,
+    if (check) {
+      return res.status(409).json({
+        message: "this is employee is already in the team",
       });
     }
 
@@ -56,18 +49,16 @@ export const pushEmployee = async (req, res) => {
       },
       {
         $push: { employeeId: new mongoose.Types.ObjectId(employeeId) },
-      },
-      { new: true }
+      }
     );
 
     if (!teamMember) {
       return res.status(400).json({
         message: "Cannot push Employee or manager not found",
-        team: teamMember,
       });
     }
 
-    return res.status(400).json({
+    return res.status(200).json({
       message: "pushed Employee successfully",
       details: teamMember,
     });
@@ -142,6 +133,7 @@ export const getMyTask = async (req, res) => {
     const taskDetails = await taskCollection
       .find({
         managerId: new mongoose.Types.ObjectId(managerId),
+        isDelete: false,
       })
       .populate("employeeId");
 
